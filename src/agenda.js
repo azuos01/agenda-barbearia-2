@@ -16,6 +16,10 @@ export function agendar(agenda, pedido) {
   const duracao = SERVICOS[servico];
   if (!duracao) throw new Error('Serviço inválido');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(data ?? '')) throw new Error('Data deve estar no formato AAAA-MM-DD');
+  // logo depois da validação da data:
+  if (new Date(`${data}T12:00:00`).getDay() === 0) {
+    throw new Error('A barbearia não abre aos domingos');
+  }
 
   const inicio = paraMinutos(hora);
   const fim = inicio + duracao;

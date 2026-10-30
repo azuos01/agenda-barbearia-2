@@ -31,3 +31,7 @@ test('recusa serviço que termina depois das 19:00', () => {
 test('recusa cliente sem nome', () => {
   assert.throws(() => agendar([], { ...pedido, cliente: '  ' }), /nome/);
 });
+
+test('recusa agendamento no domingo', () => {
+  assert.throws(() => agendar([], { ...pedido, data: '2026-11-01' }), /domingos/);
+});
