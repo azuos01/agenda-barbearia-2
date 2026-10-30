@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Agenda da Barbearia</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 520px; margin: 2rem auto; padding: 0 1rem; }
+    form { display: grid; gap: .5rem; }
+    #erro { color: #b00020; }
+  </style>
+</head>
+<body>
+  <h1>Agenda da Barbearia</h1>
+  <form id="form">
+    <input id="cliente" placeholder="Nome do cliente" required>
+    <select id="servico">
+      <option value="corte">Corte (30 min)</option>
+      <option value="barba">Barba (20 min)</option>
+      <option value="combo">Corte + barba (50 min)</option>
+    </select>
+    <input id="data" type="date" required>
+    <input id="hora" type="time" required>
+    <button>Agendar</button>
+  </form>
+  <p id="erro"></p>
+  <ul id="lista"></ul>
+  <script>
+    const lista = document.getElementById('lista');
+    const erro = document.getElementById('erro');
+    function mostrar(agenda) {
+      lista.innerHTML = '';
+      agenda.forEach(a => {
+        const li = document.createElement('li');
+        li.textContent = `${a.data} ${a.hora} - ${a.cliente} (${a.servico})`;
+        lista.appendChild(li);
+      });
+    }
+    fetch('/api/agendamentos').then(r => r.json()).then(mostrar);
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pedido = {};
+      ['cliente', 'servico', 'data', 'hora'].forEach(id => pedido[id] = document.getElementById(id).value);
+      const r = await fetch('/api/agendamentos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(pedido) });
+      const corpo = await r.json();
+      if (r.ok) { erro.textContent = ''; mostrar(corpo); } else { erro.textContent = corpo.erro; }
+    });
+  </script>
+</body>
+</html>

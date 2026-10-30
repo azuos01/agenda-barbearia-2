@@ -1,0 +1,11 @@
+{
+  "name": "agenda-barbearia",
+  "version": "1.0.0",
+  "description": "Agenda de horários de uma barbearia (app de teste para a migração ao GitHub)",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=20" }
+}
