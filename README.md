@@ -14,3 +14,4 @@ e impede horários sobrepostos ou fora do expediente (09:00 às 19:00).
 ## Equipe
 - Nome 1 (@usuario-github)
 - Nome 2 (@usuario-github)
+- Nome 3 (@usuario-github)
